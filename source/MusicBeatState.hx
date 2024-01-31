@@ -13,7 +13,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxGradient;
 import flixel.FlxState;
 import flixel.FlxBasic;
-
+#if android
 class MusicBeatState extends FlxUIState
 {
 	private var lastBeat:Float = 0;

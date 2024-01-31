@@ -757,6 +757,8 @@ class Controls extends FlxActionSet
 		}
 	}
 
+	#if !android
+
 	public function replaceBinding(control:Control, device:Device, ?toAdd:Int, ?toRemove:Int)
 	{
 		if (toAdd == toRemove)

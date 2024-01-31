@@ -647,8 +647,9 @@ class Controls extends FlxActionSet
 
 
 
-		
-	override function update()
+
+	}		
+	override function update()	
 	{
 		super.update();
 	}

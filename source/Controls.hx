@@ -382,6 +382,272 @@ class Controls extends FlxActionSet
 	}
 	#end
 
+        #if !android
+	public function bindKeys(control:Control, keys:Array<FlxKey>)
+	{
+		var copyKeys:Array<FlxKey> = keys.copy();
+		for (i in 0...copyKeys.length) {
+			if(i == NONE) copyKeys.remove(i);
+		}
+
+		#if (haxe >= "4.0.0")
+		inline forEachBound(control, (action, state) -> addKeys(action, copyKeys, state));
+		#else
+		forEachBound(control, function(action, state) addKeys(action, copyKeys, state));
+		#end
+	}
+
+	
+	public function unbindKeys(control:Control, keys:Array<FlxKey>)
+	{
+		var copyKeys:Array<FlxKey> = keys.copy();
+		for (i in 0...copyKeys.length) {
+			if(i == NONE) copyKeys.remove(i);
+		}
+
+		#if (haxe >= "4.0.0")
+		inline forEachBound(control, (action, _) -> removeKeys(action, copyKeys));
+		#else
+		forEachBound(control, function(action, _) removeKeys(action, copyKeys));
+		#end
+	}
+
+	#else
+
+	public function bindKeys(control:Control, keys:Array<FlxKey>)
+	{
+		#if (haxe >= "4.0.0")
+		inline forEachBound(control, (action, state) -> addKeys(action, keys, state));
+		#else
+		forEachBound(control, function(action, state) addKeys(action, keys, state));
+		#end
+	}
+
+	public function unbindKeys(control:Control, keys:Array<FlxKey>)
+	{
+		#if (haxe >= "4.0.0")
+		inline forEachBound(control, (action, _) -> removeKeys(action, keys));
+		#else
+		forEachBound(control, function(action, _) removeKeys(action, keys));
+		#end
+	}	
+	#end				
+	inline static function addKeys(action:FlxActionDigital, keys:Array<FlxKey>, state:FlxInputState)
+	{
+		for (key in keys)
+			if(key != NONE)
+				action.addKey(key, state);
+	}
+
+	static function removeKeys(action:FlxActionDigital, keys:Array<FlxKey>)
+	{
+		var i = action.inputs.length;
+		while (i-- > 0)
+		{
+			var input = action.inputs[i];
+			if (input.device == KEYBOARD && keys.indexOf(cast input.inputID) != -1)
+				action.remove(input);
+		}
+	}
+
+	public function setKeyboardScheme(scheme:KeyboardScheme, reset = true)
+	{
+		if (reset)
+			removeKeyboard();
+
+		keyboardScheme = scheme;
+		
+		#if (haxe >= "4.0.0")
+		switch (scheme)
+		{
+			case Solo:
+				inline bindKeys(Control.UI_UP, [W, FlxKey.UP]);
+				inline bindKeys(Control.UI_DOWN, [S, FlxKey.DOWN]);
+				inline bindKeys(Control.UI_LEFT, [A, FlxKey.LEFT]);
+				inline bindKeys(Control.UI_RIGHT, [D, FlxKey.RIGHT]);
+				inline bindKeys(Control.NOTE_UP, [W, FlxKey.UP]);
+				inline bindKeys(Control.NOTE_DOWN, [S, FlxKey.DOWN]);
+				inline bindKeys(Control.NOTE_LEFT, [A, FlxKey.LEFT]);
+				inline bindKeys(Control.NOTE_RIGHT, [D, FlxKey.RIGHT]);
+				inline bindKeys(Control.DODGE, [SPACE]);
+				inline bindKeys(Control.ACCEPT, [Z, ENTER]);
+				inline bindKeys(Control.BACK, [X, BACKSPACE, ESCAPE]);
+				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
+				inline bindKeys(Control.RESET, [R]);
+			case Duo(true):
+				inline bindKeys(Control.UI_UP, [W]);
+				inline bindKeys(Control.UI_DOWN, [S]);
+				inline bindKeys(Control.UI_LEFT, [A]);
+				inline bindKeys(Control.UI_RIGHT, [D]);
+				inline bindKeys(Control.NOTE_UP, [W]);
+				inline bindKeys(Control.NOTE_DOWN, [S]);
+				inline bindKeys(Control.NOTE_LEFT, [A]);
+				inline bindKeys(Control.NOTE_RIGHT, [D]);
+				inline bindKeys(Control.ACCEPT, [G, Z]);
+				inline bindKeys(Control.BACK, [H, X]);
+				inline bindKeys(Control.PAUSE, [ONE]);
+				inline bindKeys(Control.RESET, [R]);
+			case Duo(false):
+				inline bindKeys(Control.UI_UP, [FlxKey.UP]);
+				inline bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
+				inline bindKeys(Control.UI_LEFT, [FlxKey.LEFT]);
+				inline bindKeys(Control.UI_RIGHT, [FlxKey.RIGHT]);
+				inline bindKeys(Control.NOTE_UP, [FlxKey.UP]);
+				inline bindKeys(Control.NOTE_DOWN, [FlxKey.DOWN]);
+				inline bindKeys(Control.NOTE_LEFT, [FlxKey.LEFT]);
+				inline bindKeys(Control.NOTE_RIGHT, [FlxKey.RIGHT]);
+				inline bindKeys(Control.ACCEPT, [O]);
+				inline bindKeys(Control.BACK, [P]);
+				inline bindKeys(Control.PAUSE, [ENTER]);
+				inline bindKeys(Control.RESET, [BACKSPACE]);
+			case None: // nothing
+			case Custom: // nothing
+		}
+		#else
+		switch (scheme)
+		{
+			case Solo:
+				bindKeys(Control.UI_UP, [W, FlxKey.UP]);
+				bindKeys(Control.UI_DOWN, [S, FlxKey.DOWN]);
+				bindKeys(Control.UI_LEFT, [A, FlxKey.LEFT]);
+				bindKeys(Control.UI_RIGHT, [D, FlxKey.RIGHT]);
+				bindKeys(Control.NOTE_UP, [W, FlxKey.UP]);
+				bindKeys(Control.NOTE_DOWN, [S, FlxKey.DOWN]);
+				bindKeys(Control.NOTE_LEFT, [A, FlxKey.LEFT]);
+				bindKeys(Control.NOTE_RIGHT, [D, FlxKey.RIGHT]);
+				bindKeys(Control.DODGE, [SPACE, FlxKey.DODGE]);
+				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
+				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
+				bindKeys(Control.RESET, [R]);
+			case Duo(true):
+				bindKeys(Control.UI_UP, [W]);
+				bindKeys(Control.UI_DOWN, [S]);
+				bindKeys(Control.UI_LEFT, [A]);
+				bindKeys(Control.UI_RIGHT, [D]);
+				bindKeys(Control.NOTE_UP, [W]);
+				bindKeys(Control.NOTE_DOWN, [S]);
+				bindKeys(Control.NOTE_LEFT, [A]);
+				bindKeys(Control.NOTE_RIGHT, [D]);
+				bindKeys(Control.ACCEPT, [G, Z]);
+				bindKeys(Control.BACK, [H, X]);
+				bindKeys(Control.PAUSE, [ONE]);
+				bindKeys(Control.RESET, [R]);
+			case Duo(false):
+				bindKeys(Control.UI_UP, [FlxKey.UP]);
+				bindKeys(Control.UI_DOWN, [FlxKey.DOWN]);
+				bindKeys(Control.UI_LEFT, [FlxKey.LEFT]);
+				bindKeys(Control.UI_RIGHT, [FlxKey.RIGHT]);
+				bindKeys(Control.NOTE_UP, [FlxKey.UP]);
+				bindKeys(Control.NOTE_DOWN, [FlxKey.DOWN]);
+				bindKeys(Control.NOTE_LEFT, [FlxKey.LEFT]);
+				bindKeys(Control.NOTE_RIGHT, [FlxKey.RIGHT]);
+				bindKeys(Control.ACCEPT, [O]);
+				bindKeys(Control.BACK, [P]);
+				bindKeys(Control.PAUSE, [ENTER]);
+				bindKeys(Control.RESET, [BACKSPACE]);
+			case None: // nothing
+			case Custom: // nothing
+		}
+		#end
+	}
+
+	function removeKeyboard()
+	{
+		for (action in this.digitalActions)
+		{
+			var i = action.inputs.length;
+			while (i-- > 0)
+			{
+				var input = action.inputs[i];
+				if (input.device == KEYBOARD)
+					action.remove(input);
+			}
+		}
+	}
+
+	public function addGamepad(id:Int, ?buttonMap:Map<Control, Array<FlxGamepadInputID>>):Void
+	{
+		gamepadsAdded.push(id);
+		
+		#if (haxe >= "4.0.0")
+		for (control => buttons in buttonMap)
+			inline bindButtons(control, id, buttons);
+		#else
+		for (control in buttonMap.keys())
+			bindButtons(control, id, buttonMap[control]);
+		#end
+	}
+
+	inline function addGamepadLiteral(id:Int, ?buttonMap:Map<Control, Array<FlxGamepadInputID>>):Void
+	{
+		gamepadsAdded.push(id);
+
+		#if (haxe >= "4.0.0")
+		for (control => buttons in buttonMap)
+			inline bindButtons(control, id, buttons);
+		#else
+		for (control in buttonMap.keys())
+			bindButtons(control, id, buttonMap[control]);
+		#end
+	}
+
+	public function removeGamepad(deviceID:Int = FlxInputDeviceID.ALL):Void
+	{
+		for (action in this.digitalActions)
+		{
+			var i = action.inputs.length;
+			while (i-- > 0)
+			{
+				var input = action.inputs[i];
+				if (input.device == GAMEPAD && (deviceID == FlxInputDeviceID.ALL || input.deviceID == deviceID))
+					action.remove(input);
+			}
+		}
+
+		gamepadsAdded.remove(deviceID);
+	}
+
+	public function addDefaultGamepad(id):Void
+	{
+		#if !switch
+		addGamepadLiteral(id, [
+			Control.ACCEPT => [A],
+			Control.BACK => [B],
+			Control.UI_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP],
+			Control.UI_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
+			Control.UI_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
+			Control.UI_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT],
+			Control.NOTE_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP],
+			Control.NOTE_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN],
+			Control.NOTE_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT],
+			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT],
+			Control.PAUSE => [START],
+			Control.RESET => [Y]
+		]);
+		#else
+		addGamepadLiteral(id, [
+			//Swap A and B for switch
+			Control.ACCEPT => [B],
+			Control.BACK => [A],
+			Control.UI_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP],
+			Control.UI_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN],
+			Control.UI_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT],
+			Control.UI_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT],
+			Control.NOTE_UP => [DPAD_UP, LEFT_STICK_DIGITAL_UP, RIGHT_STICK_DIGITAL_UP],
+			Control.NOTE_DOWN => [DPAD_DOWN, LEFT_STICK_DIGITAL_DOWN, RIGHT_STICK_DIGITAL_DOWN],
+			Control.NOTE_LEFT => [DPAD_LEFT, LEFT_STICK_DIGITAL_LEFT, RIGHT_STICK_DIGITAL_LEFT],
+			Control.NOTE_RIGHT => [DPAD_RIGHT, LEFT_STICK_DIGITAL_RIGHT, RIGHT_STICK_DIGITAL_RIGHT],
+			Control.PAUSE => [START],
+			//Swap Y and X for switch
+			Control.RESET => [Y],
+		]);
+		#end
+
+
+
+
+		
 	override function update()
 	{
 		super.update();

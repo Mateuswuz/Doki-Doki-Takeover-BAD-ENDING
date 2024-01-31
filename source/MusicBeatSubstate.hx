@@ -17,7 +17,6 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 	}
 
-
          #if android
 	var virtualPad:FlxVirtualPad;
 	var trackedinputsUI:Array<FlxActionInput> = [];
@@ -71,7 +70,6 @@ class MusicBeatSubstate extends FlxSubState
 		#end
 	}
 
-	
 	private var lastBeat:Float = 0;
 	private var lastStep:Float = 0;
 

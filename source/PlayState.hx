@@ -2969,6 +2969,11 @@ class PlayState extends MusicBeatState
 		}
 		#end
 
+
+                if (controls.DODGE || _vpad.buttonA.justPressed && !inCutscene && !endingSong && !isDodging && !canDodge && curStage == 'exeport'){ //PONELE MÁS REQUISITOS LA CTM
+
+			
+
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
 		setOnLuas('botPlay', cpuControlled);

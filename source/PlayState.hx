@@ -801,8 +801,6 @@ class PlayState extends MusicBeatState
 		if (ClientPrefs.shaders)
 		{
 			staticlol = new StaticShader();
-			camGame.filters = [new ShaderFilter(staticlol)];
-			camCache.filters = [new ShaderFilter(staticlol)];
 			staticlol.alpha.value = [staticAlpha];
 		}
 

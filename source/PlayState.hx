@@ -2967,7 +2967,7 @@ class PlayState extends MusicBeatState
 				vocals.play();
 			}
 		}
-                #end
+		#end
 
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);
@@ -5030,7 +5030,6 @@ class PlayState extends MusicBeatState
 				}
 			}
 
-		}
 			if (storyDifficultyText == 'Unfair' && !note.isSustainNote && health >= 0.3)
 			{
 				health -= 0.01;
@@ -5038,10 +5037,9 @@ class PlayState extends MusicBeatState
 
 			char.playAnim(animToPlay, true);
 			char.holdTimer = 0;
-	}	
+		}
 
-}
-                        if (SONG.needsVoices)
+		if (SONG.needsVoices)
 			vocals.volume = 1;
 
 		var time:Float = 0.15;

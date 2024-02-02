@@ -178,7 +178,7 @@ class PauseSubState extends MusicBeatSubstate
 	}
 
         #if android
-	addVirtualPad(UP_DOWN, A_B)
+}       addVirtualPad(UP_DOWN, A_B)
 	#end	
 
 	override function update(elapsed:Float)

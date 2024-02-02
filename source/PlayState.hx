@@ -5038,9 +5038,10 @@ class PlayState extends MusicBeatState
 
 			char.playAnim(animToPlay, true);
 			char.holdTimer = 0;
-		}
+	}	
 
-		if (SONG.needsVoices)
+{
+                        if (SONG.needsVoices)
 			vocals.volume = 1;
 
 		var time:Float = 0.15;

@@ -5040,7 +5040,7 @@ class PlayState extends MusicBeatState
 			char.holdTimer = 0;
 	}	
 
-{
+}
                         if (SONG.needsVoices)
 			vocals.volume = 1;
 

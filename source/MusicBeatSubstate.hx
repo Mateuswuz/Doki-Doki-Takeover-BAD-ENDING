@@ -1,15 +1,16 @@
 package;
 
 import Conductor.BPMChangeEvent;
-import flixel.FlxG;
-import flixel.FlxSubState;
 import flixel.FlxBasic;
-import flixel.FlxSprite;
 #if android
 import android.flixel.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
 import flixel.util.FlxDestroyUtil;
 #end
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.FlxSubState;
+
 class MusicBeatSubstate extends FlxSubState
 {
 	public function new()
@@ -17,7 +18,17 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 	}
 
-         #if android
+	private var lastBeat:Float = 0;
+	private var lastStep:Float = 0;
+
+	private var curStep:Int = 0;
+	private var curBeat:Int = 0;
+	private var controls(get, never):Controls;
+
+	inline function get_controls():Controls
+		return PlayerSettings.player1.controls;
+
+#if android
 	var virtualPad:FlxVirtualPad;
 	var trackedinputsUI:Array<FlxActionInput> = [];
 
@@ -45,7 +56,7 @@ class MusicBeatSubstate extends FlxSubState
 		if (virtualPad != null)
 		{
 			var camControls = new flixel.FlxCamera();
-			FlxG.cameras.add(camControls, false);
+			FlxG.cameras.add(camControls);
 			camControls.bgColor.alpha = 0;
 			virtualPad.cameras = [camControls];
 		}
@@ -69,17 +80,6 @@ class MusicBeatSubstate extends FlxSubState
 		}
 		#end
 	}
-
-	private var lastBeat:Float = 0;
-	private var lastStep:Float = 0;
-
-	private var curStep:Int = 0;
-	private var curBeat:Int = 0;
-	private var controls(get, never):Controls;
-
-	inline function get_controls():Controls
-		return PlayerSettings.player1.controls;
-
 	override function update(elapsed:Float)
 	{
 		// everyStep();

@@ -210,13 +210,6 @@ class FreeplayState extends MusicBeatState
 		super.create();
 	}
 
-
-}
-	
-        #if android
-        addVirtualPad(LEFT_RIGHT, A_B);
-	#end
-
 	override function closeSubState()
 	{
 		changeSelection(0);
@@ -300,6 +293,10 @@ class FreeplayState extends MusicBeatState
 				// Hide diff select here
 			}
 		}
+
+        #if android
+        addVirtualPad(UP_DOWN, A_B);
+        #end
 
 		if (ctrl)
 		{

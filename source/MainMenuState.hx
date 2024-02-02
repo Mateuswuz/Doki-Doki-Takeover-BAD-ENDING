@@ -216,7 +216,7 @@ class MainMenuState extends MusicBeatState
 }
 	
         #if android
-        addVirtualPad(UP_DOWN, A_B)       
+        addVirtualPad("UP_DOWN, A_B")       
 	#end
 	
 	var selectedSomethin:Bool = false;

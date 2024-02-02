@@ -5030,6 +5030,7 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+		}
 			if (storyDifficultyText == 'Unfair' && !note.isSustainNote && health >= 0.3)
 			{
 				health -= 0.01;

@@ -231,10 +231,6 @@ class CreditsState extends MusicBeatState
 
 		super.update(elapsed);
 	}
-	
-	#if android
-	addVirtualPad(UP_DOWN, A_B);
-	#end
 
 	function changeSelection(change:Int = 0)
 	{
@@ -265,6 +261,10 @@ class CreditsState extends MusicBeatState
 
 		descText.text = creditsStuff[curSelected][2];
 	}
+
+	#if android
+        addVirtualPad(UP_DOWN, A_B)       
+	#end
 
 	inline private function unselectableCheck(num:Int):Bool
 		return creditsStuff[num].length <= 1;

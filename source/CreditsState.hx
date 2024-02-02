@@ -206,8 +206,7 @@ class CreditsState extends MusicBeatState
                 addVirtualPad(UP_DOWN, A_B);
                 addPadCamera();
                 #end
-	
-
+			
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.7)

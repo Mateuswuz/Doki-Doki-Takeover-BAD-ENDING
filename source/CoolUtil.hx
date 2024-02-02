@@ -52,7 +52,7 @@ class CoolUtil
 		if (FileSystem.exists(path))
 			daList = File.getContent(path).trim().split('\n');
 		#else
-			daList = Assets.getText(path).trim().split('\n');
+		
 		#end
 
 		for (i in 0...daList.length)

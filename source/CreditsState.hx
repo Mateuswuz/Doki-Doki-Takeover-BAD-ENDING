@@ -202,6 +202,12 @@ class CreditsState extends MusicBeatState
 		super.create();
 	}
 
+        #if android
+                addVirtualPad(UP_DOWN, A_B);
+                addPadCamera();
+                #end
+	
+
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.7)

@@ -2967,12 +2967,7 @@ class PlayState extends MusicBeatState
 				vocals.play();
 			}
 		}
-		#end
-
-
-                if (controls.DODGE || _vpad.buttonA.justPressed && !inCutscene && !endingSong && !isDodging && !canDodge && curStage == 'exeport'){ //PONELE MÁS REQUISITOS LA CTM
-
-			
+                #end
 
 		setOnLuas('cameraX', camFollowPos.x);
 		setOnLuas('cameraY', camFollowPos.y);

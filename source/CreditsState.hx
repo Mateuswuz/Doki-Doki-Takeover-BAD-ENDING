@@ -195,9 +195,8 @@ class CreditsState extends MusicBeatState
 
 	}
 
-	#if android
-        addVirtualPad(UP_DOWN, A_B)       
-	#end
+
+}
                   
 		descText = new FlxText(50, 600, 1180, "", 32);
 		descText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

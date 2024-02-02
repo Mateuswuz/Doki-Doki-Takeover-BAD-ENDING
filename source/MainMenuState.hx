@@ -212,8 +212,6 @@ class MainMenuState extends MusicBeatState
 		super.create();
 	}
 
-}
-	
 	var selectedSomethin:Bool = false;
 
 	override function update(elapsed:Float)
@@ -355,11 +353,6 @@ class MainMenuState extends MusicBeatState
 		}
 	}
 
-        
-        #if android
-        addVirtualPad(UP_DOWN, A_B)       
-	#end
-				
 	function changeItem(huh:Int = 0, tween:Bool = true)
 	{
 		curSelected += huh;
